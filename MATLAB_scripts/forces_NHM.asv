@@ -27,10 +27,8 @@ coef=0.5; % maximum distance from the waypoints we want to reach
 % X decomposition
 % [By SSK] X is to store the position and velocity of each pedestian.
 % [By SSK] The position and velocity of pedstrians are recorded as
-% [By SSK] 6-dimention numbers.
-% [By SSK] So, at t0, the size of X should be (1,(6*N))
-% [By SSK] By the time the simulation is over, the size of X should be
-% [By SSK] ((TF/t_fine+1), (6*N)).
+% 6-dimention numbers.
+% [By SSK] So, at t0, the size of X should be ()
 position=zeros(N,2);
 vel=zeros(N,2);
 for i=1:N
