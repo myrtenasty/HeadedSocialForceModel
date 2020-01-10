@@ -83,7 +83,7 @@ v0M=1; % maximum velocity
 % Number of individuals in each group
 % Define n_i the number of individuals in group i, then
 % n_groups = [n_1, n_2, ..., n_N];
-n_groups = [6 6];
+n_groups = [12 12];
 % Total number of individuals
 N=sum(n_groups);
 
