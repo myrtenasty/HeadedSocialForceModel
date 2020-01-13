@@ -102,7 +102,8 @@ v=0*ones(N,2);                          % initial speed
 th=2*pi*rand(N,1)-pi;                   % initial orientation
 omg=0;                                  % initial angular velocity
 for i=1:length(n_groups)                % random radii and masses
-    % random radii
+    % random radii [By SSK] Random from rm to rM, in ith iteration, the
+    % radii of the ith group are generated.
     r(sum(n_groups(1:i))-n_groups(i)+1:sum(n_groups(1:i)))=sort(rm+(rM-rm)*rand(n_groups(i),1)); 
     % random masses
     m(sum(n_groups(1:i))-n_groups(i)+1:sum(n_groups(1:i)))=sort((mm)+(mM-mm)*rand(n_groups(i),1)); 
@@ -174,8 +175,8 @@ while i<=N
     end
 end  
 
-ps=p(:,1:2);
-e_act{1}=ps(1:n_groups(1),:);
+ps=p(:,1:2); % [By SSK] Initial position of every pedestrian
+e_act{1}=ps(1:n_groups(1),:); % [By SSK] Position of pedestrians in 1st group.
 for i=2:length(n_groups)
      % current waypoint
     e_act{i}=ps(sum(n_groups(1:i-1))+1:sum(n_groups(1:i)),:);

@@ -31,8 +31,8 @@ coef=0.5; % maximum distance from the waypoints we want to reach
 % [By SSK] So, at t0, the size of X should be (1,(6*N))
 % [By SSK] By the time the simulation is over, the size of X should be
 % [By SSK] ((TF/t_fine+1), (6*N)).
-position=zeros(N,2);
-vel=zeros(N,2);
+position=zeros(N,2); % Position information
+vel=zeros(N,2); % Velocity information
 for i=1:N
     position(i,:)=[X(6*i-5) X(6*i-4)];  % [By SSK] position of x and y directions. 
     vel(i,:)=[X(6*i-2)*cos(X(6*i-3)) X(6*i-2)*sin(X(6*i-3))];  % [By SSK] velocity of x and y directions.
@@ -41,7 +41,7 @@ end
 
 %Determination of the current waypoints
 for i=1:n_groups(1)
-    e(i,:)=(e_act{1}(i,:)'-position(i,:)')/norm(e_act{1}(i,:)'-position(i,:)');
+    e(i,:)=(e_act{1}(i,:)'-position(i,:)')/norm(e_act{1}(i,:)'-position(i,:)'); % [By SSK] Direction
     if norm(position(i,:)'-e_act{1}(i,:)')<=coef && e_ind{1}(i)<e_n{1}
         e_ind{1}(i)=e_ind{1}(i)+1;
         e_act{1}(i,:)=e_seq{1}(:,e_ind{1}(i));
