@@ -42,9 +42,9 @@ end
 %Determination of the current waypoints
 for i=1:n_groups(1)
     e(i,:)=(e_act{1}(i,:)'-position(i,:)')/norm(e_act{1}(i,:)'-position(i,:)'); % [By SSK] Direction
-    if norm(position(i,:)'-e_act{1}(i,:)')<=coef && e_ind{1}(i)<e_n{1}
-        e_ind{1}(i)=e_ind{1}(i)+1;
-        e_act{1}(i,:)=e_seq{1}(:,e_ind{1}(i));
+    if norm(position(i,:)'-e_act{1}(i,:)')<=coef && e_ind{1}(i)<e_n{1} % [By SSK] Pedestrian reached waypoint and flag hasn't switched.
+        e_ind{1}(i)=e_ind{1}(i)+1; %[By SSK] Switch flag to next waypoint.
+        e_act{1}(i,:)=e_seq{1}(:,e_ind{1}(i)); %[By SSK] Switch to next waypoint.
         e(i,:)=(e_act{1}(i,:)'-position(i,:)')/norm(e_act{1}(i,:)'-position(i,:)');
     end
     if norm(position(i,:)'-e_act{1}(i,:)')<=coef && e_ind{1}(i)==e_n{1}
@@ -90,7 +90,7 @@ for k=1:length(n_groups)
                 fij1(i,:)=fij1(i,:)'+A*exp((rij-dij)/B)*nij; 
                 if dij<rij
                     fij2(i,:)=fij2(i,:)'+k1*(rij-dij)*nij;
-                    tij=[-nij(2) nij(1)]';
+                    tij=[-nij(2) nij(1)]'; % [By SSK] Anticlockwise rotate 90
                     dvij=(vel(j,:)'-vel(i,:)')'*tij;
                     fij3(i,:)=fij3(i,:)'+k2*(rij-dij)*dvij*tij;
                 end 
@@ -101,8 +101,8 @@ for k=1:length(n_groups)
             xp=position(i,1);
             yp=position(i,2);
             rp=[xp yp]';
-            ra=max([map_walls(2*w-1,1) map_walls(2*w,1)]',[map_walls(2*w-1,2) map_walls(2*w,2)]'); 
-            rb=min([map_walls(2*w-1,1) map_walls(2*w,1)]',[map_walls(2*w-1,2) map_walls(2*w,2)]');
+            ra=max([map_walls(2*w-1,1) map_walls(2*w,1)]',[map_walls(2*w-1,2) map_walls(2*w,2)]'); % [By SSK] Far end of wall
+            rb=min([map_walls(2*w-1,1) map_walls(2*w,1)]',[map_walls(2*w-1,2) map_walls(2*w,2)]'); % [By SSK] Close end of wall
             xa=ra(1);
             ya=ra(2);
             xb=rb(1);
@@ -113,7 +113,7 @@ for k=1:length(n_groups)
             % line in which AB lives. Since t in [0,1], t_star=min(max(0,t),1);
             % and the distance from p to AB is ||s(t_star)-p||
             t=((xp-xa)*(xb-xa)+(yp-ya)*(yb-ya))/(((xb-xa)^2+(yb-ya)^2));
-            t_star=min(max(0,t),1);
+            t_star=min(max(0,t),1); % [By SSK] Most close point to pedestrian on wall AB
             rh=ra+t_star*(rb-ra);
             diw=norm(rp-rh);
             niw=(rp-rh)/norm(rp-rh);
